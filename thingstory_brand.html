@@ -1069,6 +1069,164 @@ footer {
 }
 .footer-links a:hover { color: var(--yellow); }
 
+/* ─── DEMO MODAL ─── */
+.demo-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,31,46,0.75);
+  z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(6px);
+}
+.demo-overlay.open { opacity: 1; pointer-events: all; }
+
+.demo-modal {
+  background: var(--cream);
+  width: 100%; max-width: 540px;
+  max-height: 90vh; overflow-y: auto;
+  position: relative;
+}
+
+.demo-top-bar {
+  background: var(--navy);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.demo-top-bar .demo-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--cream); letter-spacing: 1px;
+}
+.demo-top-bar .demo-logo span { color: var(--yellow); }
+.demo-close-btn {
+  background: none; border: none; cursor: pointer;
+  color: rgba(242,232,208,.5); font-size: 20px; line-height: 1;
+  padding: 0 4px; transition: color 0.2s;
+}
+.demo-close-btn:hover { color: var(--cream); }
+
+.demo-body { padding: 32px 28px 40px; }
+
+/* upload state */
+.demo-upload-zone {
+  border: 2px dashed var(--light-stroke);
+  background: rgba(255,253,245,0.6);
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.demo-upload-zone:hover { border-color: var(--yellow); background: rgba(245,200,66,0.05); }
+.demo-upload-zone input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.demo-upload-icon { font-size: 40px; margin-bottom: 14px; }
+.demo-upload-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 8px;
+}
+.demo-upload-sub { font-size: 12px; color: var(--mid); line-height: 1.6; }
+.demo-upload-sub em { color: var(--yellow-dark); font-style: normal; font-weight: 700; }
+
+.demo-preview-wrap { margin-top: 16px; display: none; }
+.demo-preview-wrap.show { display: block; }
+.demo-preview-img {
+  width: 100%; max-height: 200px; object-fit: cover; display: block;
+}
+.demo-analyze-btn {
+  width: 100%; margin-top: 16px;
+  background: var(--navy); color: var(--cream);
+  border: none; padding: 14px;
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: background 0.2s;
+}
+.demo-analyze-btn:hover { background: var(--rust); }
+
+/* loading state */
+.demo-loading {
+  display: none; text-align: center; padding: 60px 20px;
+}
+.demo-loading.show { display: block; }
+.demo-spinner {
+  width: 48px; height: 48px;
+  border: 3px solid var(--cream3);
+  border-top-color: var(--yellow);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.demo-loading-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; color: var(--sepia);
+}
+.demo-loading-sub { font-size: 11px; color: var(--mid); margin-top: 8px; letter-spacing: 1px; }
+
+/* result state */
+.demo-result { display: none; }
+.demo-result.show { display: block; }
+
+.demo-result-header {
+  background: var(--navy);
+  padding: 20px 24px;
+  display: flex; gap: 16px; align-items: center;
+  margin-bottom: 24px;
+}
+.demo-result-thumb {
+  width: 64px; height: 64px; object-fit: cover; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,.1);
+}
+.demo-result-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 700; color: var(--cream); line-height: 1.2;
+}
+.demo-result-era {
+  display: inline-block; margin-top: 6px;
+  background: var(--yellow); color: var(--ink);
+  font-size: 10px; font-weight: 900; letter-spacing: 2px;
+  padding: 3px 10px;
+}
+
+.demo-section { margin-bottom: 20px; }
+.demo-section-label {
+  font-size: 9px; font-weight: 900; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--mid);
+  margin-bottom: 8px;
+}
+.demo-section-text {
+  font-size: 13px; line-height: 1.75; color: var(--sepia);
+}
+.demo-questions { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.demo-questions li {
+  font-size: 13px; color: var(--ink);
+  padding: 10px 14px;
+  background: var(--cream2);
+  border-left: 3px solid var(--yellow);
+  line-height: 1.5;
+}
+.demo-starter {
+  background: var(--navy); color: var(--cream);
+  padding: 16px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; font-style: italic; line-height: 1.7;
+  border-left: 3px solid var(--yellow);
+}
+.demo-restart {
+  width: 100%; margin-top: 20px;
+  background: transparent; color: var(--mid);
+  border: 1px solid var(--light-stroke); padding: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: all 0.2s;
+}
+.demo-restart:hover { border-color: var(--sepia); color: var(--sepia); }
+
 /* ─── SCROLLBAR ─── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--cream2); }
@@ -1330,7 +1488,7 @@ footer {
 <section id="cta">
   <h2 id="cta-h2">你家里也有这样一件物件吗？</h2>
   <p id="cta-p">在它的故事被彻底遗忘之前，用物语把它留下来。</p>
-  <div class="cta-tag" id="cta-main">开始记录 · Start Now</div>
+  <div class="cta-tag" id="cta-main" onclick="openDemo()">开始记录 · Start Now</div>
 </section>
 
 <footer>
@@ -1342,6 +1500,73 @@ footer {
     <a href="#">Contact</a>
   </div>
 </footer>
+
+<!-- DEMO EXPERIENCE MODAL -->
+<div class="demo-overlay" id="demoOverlay" onclick="closeDemoOutside(event)">
+  <div class="demo-modal" id="demoModal">
+    <div class="demo-top-bar">
+      <div class="demo-logo">物語<span>·</span>Thingstory</div>
+      <button class="demo-close-btn" onclick="closeDemo()">✕</button>
+    </div>
+    <div class="demo-body">
+
+      <!-- UPLOAD STATE -->
+      <div id="demoUploadState">
+        <div style="margin-bottom:20px;">
+          <div class="section-label" style="margin-bottom:8px;">/ 开始记录 /</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;line-height:1.2;margin-bottom:8px;">上传一件家中的老物件</div>
+          <div style="font-size:12px;color:var(--sepia);line-height:1.7;">AI 将为它生成年代背景、文化意义，以及帮助你与长辈开启对话的问题</div>
+        </div>
+        <div class="demo-upload-zone" id="demoDropZone">
+          <input type="file" id="demoFileInput" accept="image/*" capture="environment" onchange="handleFileSelect(event)">
+          <div class="demo-upload-icon">📷</div>
+          <div class="demo-upload-title">拍照或从相册选择</div>
+          <div class="demo-upload-sub">支持 JPG · PNG · HEIC<br><em>点击拍照 / 长按选择相册</em></div>
+        </div>
+        <div class="demo-preview-wrap" id="demoPreviewWrap">
+          <img class="demo-preview-img" id="demoPreviewImg" src="" alt="">
+          <button class="demo-analyze-btn" onclick="analyzeImage()">✦ AI 开始分析</button>
+        </div>
+      </div>
+
+      <!-- LOADING STATE -->
+      <div class="demo-loading" id="demoLoadingState">
+        <div class="demo-spinner"></div>
+        <div class="demo-loading-text">AI 正在识别物件背景…</div>
+        <div class="demo-loading-sub">通常需要 5—10 秒</div>
+      </div>
+
+      <!-- RESULT STATE -->
+      <div class="demo-result" id="demoResultState">
+        <div class="demo-result-header">
+          <img class="demo-result-thumb" id="demoResultThumb" src="" alt="">
+          <div>
+            <div class="demo-result-name" id="demoResultName"></div>
+            <div class="demo-result-era" id="demoResultEra"></div>
+          </div>
+        </div>
+        <div class="demo-section">
+          <div class="demo-section-label">年代背景</div>
+          <div class="demo-section-text" id="demoBackground"></div>
+        </div>
+        <div class="demo-section">
+          <div class="demo-section-label">文化意义</div>
+          <div class="demo-section-text" id="demoCultural"></div>
+        </div>
+        <div class="demo-section">
+          <div class="demo-section-label">建议向长辈提问</div>
+          <ul class="demo-questions" id="demoQuestions"></ul>
+        </div>
+        <div class="demo-section">
+          <div class="demo-section-label">开始对话</div>
+          <div class="demo-starter" id="demoStarter"></div>
+        </div>
+        <button class="demo-restart" onclick="resetDemo()">↩ 重新上传另一件物件</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
@@ -1744,6 +1969,97 @@ window.addEventListener('scroll', () => {
 
 // ─── INIT ───
 renderCards('all');
+
+// ─── DEMO EXPERIENCE ───
+let demoImageBase64 = null;
+let demoMimeType = null;
+
+function openDemo() {
+  document.getElementById('demoOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemo() {
+  document.getElementById('demoOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeDemoOutside(e) {
+  if (e.target === document.getElementById('demoOverlay')) closeDemo();
+}
+
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  demoMimeType = file.type;
+
+  // Resize to max 1024px for speed
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 1024;
+      let w = img.width, h = img.height;
+      if (w > max || h > max) {
+        if (w > h) { h = Math.round(h * max / w); w = max; }
+        else { w = Math.round(w * max / h); h = max; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      demoImageBase64 = dataUrl.split(',')[1];
+      demoMimeType = 'image/jpeg';
+
+      document.getElementById('demoPreviewImg').src = dataUrl;
+      document.getElementById('demoPreviewWrap').classList.add('show');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function analyzeImage() {
+  if (!demoImageBase64) return;
+
+  // Show loading
+  document.getElementById('demoUploadState').style.display = 'none';
+  document.getElementById('demoLoadingState').classList.add('show');
+
+  try {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64: demoImageBase64, mimeType: demoMimeType })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.result) throw new Error(data.error || 'Analysis failed');
+    showResult(data.result);
+  } catch (e) {
+    document.getElementById('demoLoadingState').classList.remove('show');
+    document.getElementById('demoUploadState').style.display = 'block';
+    alert('分析失败，请重试：' + e.message);
+  }
+}
+
+function showResult(r) {
+  document.getElementById('demoLoadingState').classList.remove('show');
+  document.getElementById('demoResultThumb').src = document.getElementById('demoPreviewImg').src;
+  document.getElementById('demoResultName').textContent = r.name;
+  document.getElementById('demoResultEra').textContent = r.era;
+  document.getElementById('demoBackground').textContent = r.background;
+  document.getElementById('demoCultural').textContent = r.cultural;
+  document.getElementById('demoQuestions').innerHTML = r.questions.map(q => `<li>${q}</li>`).join('');
+  document.getElementById('demoStarter').textContent = r.starter;
+  document.getElementById('demoResultState').classList.add('show');
+}
+
+function resetDemo() {
+  demoImageBase64 = null;
+  demoMimeType = null;
+  document.getElementById('demoResultState').classList.remove('show');
+  document.getElementById('demoPreviewWrap').classList.remove('show');
+  document.getElementById('demoFileInput').value = '';
+  document.getElementById('demoUploadState').style.display = 'block';
+}
 </script>
 </body>
 </html>
