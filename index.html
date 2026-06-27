@@ -304,9 +304,6 @@
 
   /* ===== 家人 tab ===== */
   .fam-head{padding:6px 2px 12px}
-  .fam-title{display:flex;align-items:center;gap:8px}
-  .fam-title .ft{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--ink)}
-  .fam-title .fsw{margin-left:auto;font-size:11px;color:var(--vermil);cursor:pointer}
   .fam-members{display:flex;gap:13px;overflow-x:auto;padding:12px 2px 4px}
   .fam-members::-webkit-scrollbar{height:0}
   .fam-mem{flex:none;text-align:center;width:60px;cursor:pointer}
@@ -819,7 +816,7 @@ function renderMuseum(){
 
   return `
   <div class="vp-pad">
-    <div class="appbar" style="padding-left:2px;padding-right:2px"><span class="ab-title">Family Memory Museum</span>
+    <div class="appbar"><span class="ab-title">Family Memory Museum</span>
       <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Search · V2 feature">${I.search}</div></div></div>
     <div class="seg">
       <button class="${STATE.museumSeg==='object'?'on':''}" data-act="seg" data-seg="object">By Object</button>
@@ -976,9 +973,9 @@ function renderFamily(){
 
   return `
   <div class="vp-pad">
+    <div class="appbar"><span class="ab-title">Happy Family</span>
+      <div class="ab-actions"><span data-act="toast" data-msg="Switch family · V2 multi-family" style="font-size:11px;color:var(--vermil);cursor:pointer;padding:0 4px">Switch ⌄</span></div></div>
     <div class="fam-head">
-      <div class="fam-title"><span class="ft">Happy Family</span>
-        <span class="fsw" data-act="toast" data-msg="Switch family · V2 multi-family">Switch ⌄</span></div>
       <div class="fam-members">
         ${members}
         <div class="fam-mem" data-act="invite"><div class="fm-add">＋</div><div class="fmn">Invite</div><div class="fmr">New member</div></div>
@@ -1105,7 +1102,7 @@ function renderEcho(){
 
   return `
   <div class="vp-pad">
-    <div class="appbar" style="padding-left:2px;padding-right:2px"><span class="ab-title">Reminders</span>
+    <div class="appbar"><span class="ab-title">Reminders</span>
       <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Echo settings: 4 trigger types / silent hours">${I.settings}</div></div></div>
     <div class="echo-filter">${fbar}</div>
     ${body}
@@ -1415,7 +1412,7 @@ function renderSettings(){
       <div class="set-row"><span class="sr-l">注销账号</span><span class="sr-v">›</span></div></div>
 
     <div class="set-group"><div class="sg-t">关于</div>
-      <div class="set-row"><span class="sr-l">版本号</span><span class="sr-v">物语 1.0 · MVP</span></div>
+      <div class="set-row"><span class="sr-l">版本号</span><span class="sr-v">Thingstory 1.0 · MVP</span></div>
       <div class="set-row"><span class="sr-l">用户协议 / 隐私政策</span><span class="sr-v">›</span></div>
       <div class="set-row"><span class="sr-l">反馈与建议</span><span class="sr-v">›</span></div></div>
   </div>`;
@@ -1450,8 +1447,8 @@ function renderScreen(){
 /* 首页右上角设置入口仅在 home tab 顶部出现 → 用 appbar 替代;首页特殊处理 */
 function homeTopBar(){
   if(STATE.tab==="home" && !STATE.view){
-    return `<div class="appbar" style="padding-bottom:4px">
-      <span class="ab-title" style="font-family:var(--serif);font-size:20px">物语</span>
+    return `<div class="appbar">
+      <span class="ab-title">Thingstory</span>
       <div class="ab-actions">
         <div class="ab-ico" data-act="echo">${I.bell}</div>
         <div class="ab-ico" data-act="settings">${I.settings}</div>
