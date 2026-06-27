@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thingstory · 物语</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --vermil: #B94A2C;
+    --vermil-light: #D4634A;
+    --gold: #C9A84C;
+    --ink: #1C1410;
+    --ink2: #3D2B1F;
+    --sub: #7A5C48;
+    --faint: #A0856C;
+    --cream: #FAF7F2;
+    --cream2: #F2EDE4;
+    --line: #E0D5C8;
+    --white: #FFFFFF;
+    --serif: 'Georgia', 'Songti SC', 'SimSun', serif;
+    --sans: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+    --radius: 16px;
+    --section-pad: 96px 24px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 64px;
+    background: rgba(250,247,242,.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: .3px; }
+  .nav-logo span { color: var(--vermil); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 14px; color: var(--sub); text-decoration: none; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 20px; border-radius: 99px;
+    background: var(--vermil); color: #fff;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: background .2s, transform .1s;
+  }
+  .nav-cta:hover { background: var(--vermil-light); transform: translateY(-1px); }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 120px 24px 80px;
+    text-align: center;
+    background: var(--ink);
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(185,74,44,.25) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,168,76,.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    padding: 5px 14px; border-radius: 99px;
+    border: 1px solid rgba(201,168,76,.5);
+    color: var(--gold); font-size: 12px; letter-spacing: 1.5px;
+    margin-bottom: 28px;
+  }
+  .hero-h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 700; line-height: 1.15;
+    color: var(--cream);
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .hero-h1 em { color: var(--vermil); font-style: normal; }
+  .hero-en {
+    font-size: clamp(13px, 1.6vw, 17px);
+    color: rgba(250,247,242,.45);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-desc {
+    max-width: 520px;
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: rgba(250,247,242,.65);
+    line-height: 1.75; margin-bottom: 44px;
+  }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 32px; border-radius: 99px;
+    background: var(--vermil); color: #fff;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: background .2s, transform .1s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--vermil-light); transform: translateY(-2px); }
+  .btn-ghost {
+    padding: 14px 32px; border-radius: 99px;
+    border: 1px solid rgba(250,247,242,.25); color: rgba(250,247,242,.8);
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: border-color .2s, color .2s, transform .1s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(250,247,242,.6); color: #fff; transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    color: rgba(250,247,242,.3); font-size: 11px; letter-spacing: 1px;
+    animation: bounce 2s infinite;
+  }
+  .hero-scroll svg { width: 16px; height: 16px; }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); } }
+
+  /* ── Section Base ── */
+  section { padding: var(--section-pad); max-width: 1120px; margin: 0 auto; }
+  .sec-wrap { padding: var(--section-pad); }
+  .sec-label {
+    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--vermil); font-weight: 600; margin-bottom: 14px;
+  }
+  .sec-h2 {
+    font-family: var(--serif);
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 700; line-height: 1.2;
+    color: var(--ink); margin-bottom: 10px;
+  }
+  .sec-en {
+    font-size: 13px; color: var(--faint); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .sec-desc {
+    font-size: 16px; color: var(--sub);
+    line-height: 1.8; max-width: 560px;
+  }
+
+  /* ── How It Works ── */
+  #how { background: var(--white); }
+  #how .sec-wrap { max-width: 1120px; margin: 0 auto; }
+  .how-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start; margin-top: 56px;
+  }
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 24px; padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer; transition: background .15s; border-radius: 12px;
+  }
+  .step:first-child { padding-top: 0; }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 36px; height: 36px; flex: none;
+    border-radius: 50%; border: 1.5px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: var(--faint);
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .step.active .step-num { background: var(--vermil); border-color: var(--vermil); color: #fff; }
+  .step-body {}
+  .step-t { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .step-t-en { font-size: 11px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .step-d { font-size: 14px; color: var(--sub); line-height: 1.7; }
+  .how-preview {
+    position: sticky; top: 100px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phone-shell {
+    width: 280px; height: 560px;
+    border-radius: 40px;
+    background: #1a1a1a;
+    box-shadow: 0 32px 64px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.08);
+    overflow: hidden; position: relative;
+  }
+  .phone-shell iframe {
+    width: 100%; height: 100%;
+    border: none; border-radius: 40px;
+  }
+  .phone-notch {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 24px;
+    background: #1a1a1a; border-radius: 12px; z-index: 10;
+  }
+
+  /* ── Products ── */
+  #products { background: var(--cream2); }
+  #products .sec-wrap { max-width: 1120px; margin: 0 auto; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px; margin-top: 48px;
+  }
+  .product-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(28,20,16,.08); }
+  .product-ic {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--cream2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 16px;
+  }
+  .product-t { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .product-en { font-size: 11px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .product-d { font-size: 13px; color: var(--sub); line-height: 1.7; }
+  .product-tag {
+    display: inline-block; margin-top: 14px;
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--cream2); color: var(--faint);
+    font-size: 11px;
+  }
+
+  /* Placeholder card */
+  .placeholder-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 2px dashed var(--line);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 200px; text-align: center;
+  }
+  .placeholder-card .ph-ic { font-size: 28px; margin-bottom: 10px; opacity: .35; }
+  .placeholder-card .ph-t { font-size: 13px; color: var(--faint); }
+
+  /* ── Cases ── */
+  #cases { background: var(--white); }
+  #cases .sec-wrap { max-width: 1120px; margin: 0 auto; }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px; margin-top: 48px;
+  }
+  .case-card {
+    background: var(--cream); border-radius: var(--radius);
+    padding: 28px 24px; border: 1px solid var(--line);
+  }
+  .case-quote {
+    font-family: var(--serif); font-size: 18px; line-height: 1.6;
+    color: var(--ink); margin-bottom: 20px;
+  }
+  .case-quote::before { content: '\201C'; color: var(--vermil); font-size: 28px; line-height: 0; vertical-align: -8px; margin-right: 2px; }
+  .case-meta { display: flex; align-items: center; gap: 12px; }
+  .case-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--cream2); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex: none;
+  }
+  .case-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .case-role { font-size: 12px; color: var(--faint); }
+  .case-obj {
+    display: inline-block; margin-top: 16px;
+    padding: 4px 10px; border-radius: 6px;
+    background: var(--cream2); color: var(--sub);
+    font-size: 11px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--ink); color: rgba(250,247,242,.5);
+    padding: 48px 40px; text-align: center;
+  }
+  .footer-logo { font-family: var(--serif); font-size: 20px; color: var(--cream); margin-bottom: 8px; }
+  .footer-logo span { color: var(--vermil); }
+  footer p { font-size: 13px; margin-bottom: 4px; }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .how-grid { grid-template-columns: 1fr; }
+    .how-preview { display: none; }
+    section, .sec-wrap { padding: 64px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">物<span>语</span> · Thingstory</div>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#products">Products</a>
+    <a href="#cases">Stories</a>
+  </div>
+  <a class="nav-cta" href="index.html" target="_blank">体验原型 →</a>
+</nav>
+
+<!-- ① Hero -->
+<section id="hero">
+  <div class="hero-tag">Family Memory · 家族记忆</div>
+  <h1 class="hero-h1">让老物件，<br><em>重新开口说话</em></h1>
+  <p class="hero-en">Give Heirlooms a Voice</p>
+  <p class="hero-desc">
+    每一件传家之物，都是一段尚未被说出口的故事。<br>
+    Thingstory 帮助家庭用最自然的方式记录、传承与纪念。
+  </p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="index.html" target="_blank">体验交互原型</a>
+    <a class="btn-ghost" href="#how">了解如何运作</a>
+  </div>
+  <div class="hero-scroll">
+    SCROLL
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ② How It Works -->
+<div id="how" class="sec-wrap">
+  <section>
+    <div class="sec-label">How It Works</div>
+    <h2 class="sec-h2">物语如何运作</h2>
+    <p class="sec-en">The Service Flow</p>
+    <p class="sec-desc">从一件老物件出发，五个步骤完成从「捕捉」到「传承」的完整闭环。</p>
+
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step active">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-t">发现老物件</div>
+            <div class="step-t-en">Discover the Object</div>
+            <div class="step-d">家里那件被遗忘的旗袍、奶奶珍藏的陈皮罐、父亲用过的海鸥相机——任何承载记忆的物件都可以成为起点。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-t">多维度记录</div>
+            <div class="step-t-en">Capture &amp; Record</div>
+            <div class="step-d">拍照、录音、录像，6 种记录方式覆盖完整的「转译光谱」——从原声口述到 AI 文字提炼，你选择最自然的那种。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-t">AI 整理成故事</div>
+            <div class="step-t-en">AI Structures the Story</div>
+            <div class="step-d">AI 根据录入内容自动提炼时间线、人物关系与核心叙事，家人可随时补充、修正、留言。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-t">Echo 唤醒记忆</div>
+            <div class="step-t-en">Echo — Memory Triggers</div>
+            <div class="step-d">节日、忌日、家人生日——Echo 在正确的时机推送关联故事，让记忆以最自然的方式在家人间流动。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-t">生成实体纪念品</div>
+            <div class="step-t-en">Create a Keepsake</div>
+            <div class="step-d">将数字档案转化为可以捧在手里的实物——故事书、声音吊坠、家族地图——让记忆从屏幕走进现实。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="how-preview">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <iframe src="index.html" title="Thingstory App Prototype"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ③ Products -->
+<div id="products" class="sec-wrap">
+  <section>
+    <div class="sec-label">Memorial Products</div>
+    <h2 class="sec-h2">我们能提供的纪念品</h2>
+    <p class="sec-en">What We Create for You</p>
+    <p class="sec-desc">每一件纪念品，都以那件老物件为核心，将数字故事转化为可以代代相传的实物。</p>
+
+    <div class="products-grid">
+      <!-- 待填入：你提供的产品内容 -->
+      <div class="placeholder-card">
+        <div class="ph-ic">📦</div>
+        <div class="ph-t">纪念品 1<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+      <div class="placeholder-card">
+        <div class="ph-ic">📦</div>
+        <div class="ph-t">纪念品 2<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+      <div class="placeholder-card">
+        <div class="ph-ic">📦</div>
+        <div class="ph-t">纪念品 3<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+      <div class="placeholder-card">
+        <div class="ph-ic">📦</div>
+        <div class="ph-t">纪念品 4<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ④ Cases -->
+<div id="cases" class="sec-wrap">
+  <section>
+    <div class="sec-label">User Stories</div>
+    <h2 class="sec-h2">他们的故事</h2>
+    <p class="sec-en">Real Families, Real Memories</p>
+    <p class="sec-desc">每一段记忆，都值得被好好保存下来。</p>
+
+    <div class="cases-grid">
+      <!-- 待填入：你提供的用户案例 -->
+      <div class="placeholder-card" style="min-height:200px">
+        <div class="ph-ic">💬</div>
+        <div class="ph-t">用户案例 1<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+      <div class="placeholder-card" style="min-height:200px">
+        <div class="ph-ic">💬</div>
+        <div class="ph-t">用户案例 2<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+      <div class="placeholder-card" style="min-height:200px">
+        <div class="ph-ic">💬</div>
+        <div class="ph-t">用户案例 3<br><span style="font-size:11px;opacity:.6">待填入内容</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">物<span>语</span> · Thingstory</div>
+  <p>让每一件老物件，都能重新开口说话。</p>
+  <p style="margin-top:16px"><a href="index.html" target="_blank">体验交互原型 →</a></p>
+</footer>
+
+<script>
+  // Step hover — highlight active step
+  document.querySelectorAll('.step').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    });
+  });
+
+  // Nav shadow on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 10 ? '0 2px 16px rgba(28,20,16,.08)' : 'none';
+  });
+</script>
+
+</body>
+</html>
