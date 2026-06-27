@@ -26,11 +26,18 @@ module.exports = async function handler(req, res) {
 }`;
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
+    const apiKey = process.env.GEMINI_API_KEY || '';
+    const isOAuth = apiKey.startsWith('AQ') || apiKey.startsWith('ya29');
+    const url = isOAuth
+      ? 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+      : `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(isOAuth ? { 'Authorization': `Bearer ${apiKey}` } : {})
+        },
         body: JSON.stringify({
           contents: [{ parts: [
             { inline_data: { mime_type: mimeType, data: imageBase64 } },
