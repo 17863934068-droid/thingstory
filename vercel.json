@@ -1,5 +1,5 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/thingstory_brand.html" }
+  "redirects": [
+    { "source": "/", "destination": "/thingstory_brand.html", "permanent": false }
   ]
 }
