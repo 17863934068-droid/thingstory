@@ -67,7 +67,8 @@
     box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 2px rgba(80,140,180,.5) inset}
   .sbar{padding:17px 26px 2px;display:flex;justify-content:space-between;align-items:center;
     font-size:12px;font-weight:600;color:var(--ink);flex:none;z-index:30}
-  .sbar .rgt{font-size:11px;letter-spacing:.5px}
+  .sbar .rgt{display:flex;align-items:center;gap:6px}
+  .sbar .rgt svg{display:block;color:var(--ink)}
   .home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
     width:124px;height:5px;border-radius:3px;background:rgba(43,38,34,.26);z-index:40}
 
@@ -81,13 +82,15 @@
   .appbar{padding:6px 20px 10px;display:flex;align-items:center;gap:10px;flex:none}
   .appbar .ab-back{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);
     background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);
-    font-size:15px;transition:.15s;flex:none}
+    transition:.15s;flex:none}
+  .appbar .ab-back svg{width:16px;height:16px}
   .appbar .ab-back:hover{background:var(--screen2)}
   .appbar .ab-title{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--ink);letter-spacing:.2px}
   .appbar .ab-actions{margin-left:auto;display:flex;gap:8px}
   .appbar .ab-ico{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);
     background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);transition:.15s}
   .appbar .ab-ico:hover{background:var(--screen2);color:var(--ink)}
+  .appbar .ab-ico svg{width:16px;height:16px}
 
   /* ===== 通用文字 ===== */
   .eyebrow{font-size:9.5px;letter-spacing:2.6px;color:var(--vermil);font-weight:700;text-transform:uppercase}
@@ -633,6 +636,20 @@ const ECHOES = [
    desc:"The system lifted a line from the ration coupon recording that you missed — and now holds it up to you, like a late-arriving gift.", when:"History"}
 ];
 
+/* ---- Appbar & status bar icons ---- */
+const I = {
+  back:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`,
+  search:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>`,
+  share:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`,
+  edit:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`,
+  settings:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  more:    `<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>`,
+  bell:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8 a6 6 0 0 0 -12 0 c0 7 -3 9 -3 9 H21 s-3 -2 -3 -9 z"/><path d="M13.5 21 a2 2 0 0 1 -3 0"/></svg>`,
+};
+const SBAR_SIGNAL  = `<svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="9" width="3" height="3" rx=".6"/><rect x="5" y="6" width="3" height="6" rx=".6"/><rect x="10" y="3" width="3" height="9" rx=".6"/><rect x="15" y="0" width="3" height="12" rx=".6"/></svg>`;
+const SBAR_WIFI    = `<svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="8" cy="11" r="1.3" fill="currentColor" stroke="none"/><path d="M4.8 8.3 Q8 5.4 11.2 8.3" stroke-width="1.6"/><path d="M2 5.6 Q8 .8 14 5.6" stroke-width="1.6"/></svg>`;
+const SBAR_BATTERY = `<svg width="28" height="13" viewBox="0 0 28 13" fill="none"><rect x=".5" y=".5" width="22" height="12" rx="3.5" stroke="currentColor" stroke-opacity=".35"/><rect x="1.5" y="1.5" width="18" height="10" rx="2.5" fill="currentColor"/><path d="M23.5 4.5v4c1.2-.5 2.2-1.2 2.2-2s-1-1.5-2.2-2z" fill="currentColor" fill-opacity=".45"/></svg>`;
+
 /* ---- 底部导航 ---- */
 const NAV_ICONS = {
   home:`<svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 L12 3 L21 9.5 V20 a1 1 0 0 1 -1 1 H4 a1 1 0 0 1 -1 -1 z"/><path d="M9 21 V13 h6 V21"/></svg>`,
@@ -803,7 +820,7 @@ function renderMuseum(){
   return `
   <div class="vp-pad">
     <div class="appbar" style="padding-left:2px;padding-right:2px"><span class="ab-title">Family Memory Museum</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Search · V2 feature">🔍</div></div></div>
+      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Search · V2 feature">${I.search}</div></div></div>
     <div class="seg">
       <button class="${STATE.museumSeg==='object'?'on':''}" data-act="seg" data-seg="object">By Object</button>
       <button class="${STATE.museumSeg==='method'?'on':''}" data-act="seg" data-seg="method">6 Record Methods</button>
@@ -878,11 +895,11 @@ function renderDetail(id){
   return `
   <div class="vp-pad" style="padding-left:0;padding-right:0">
     <div class="appbar" style="padding-left:16px;padding-right:16px">
-      <div class="ab-back" data-act="back">‹</div>
+      <div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">Object Detail</span>
       <div class="ab-actions">
-        <div class="ab-ico" data-act="toast" data-msg="Share link generated">⤴</div>
-        <div class="ab-ico" data-act="toast" data-msg="Edit object info">✎</div>
+        <div class="ab-ico" data-act="toast" data-msg="Share link generated">${I.share}</div>
+        <div class="ab-ico" data-act="toast" data-msg="Edit object info">${I.edit}</div>
       </div></div>
 
     <div class="det-hero">${objImage(o)}<div class="dh-grad"></div>
@@ -1008,9 +1025,9 @@ function renderChat(){
 
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">Happy Family · 4 members</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Group settings: rename / leave / disband">⋯</div></div></div>
+      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Group settings: rename / leave / disband">${I.more}</div></div></div>
     <div style="padding:8px 2px 0">${body}</div>
     <div class="chat-input" data-act="toast" data-msg="Text / voice / photo / document · @mention · link to object">
       <div class="ci-ic">＋</div><div class="ci-ph">Say something… link to an object</div>
@@ -1035,9 +1052,9 @@ function renderMember(id){
 
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">Family Member</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Edit ${esc(m.name)}'s info">✎</div></div></div>
+      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Edit ${esc(m.name)}'s info">${I.edit}</div></div></div>
 
     <div style="text-align:center;padding:14px 0 6px">
       ${avatar(id,72)}
@@ -1089,7 +1106,7 @@ function renderEcho(){
   return `
   <div class="vp-pad">
     <div class="appbar" style="padding-left:2px;padding-right:2px"><span class="ab-title">Reminders</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Echo settings: 4 trigger types / silent hours">⚙</div></div></div>
+      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Echo settings: 4 trigger types / silent hours">${I.settings}</div></div></div>
     <div class="echo-filter">${fbar}</div>
     ${body}
   </div>`;
@@ -1101,7 +1118,7 @@ function renderEchoDetail(objId){
   const o = OBJECTS.find(x=>x.id===e.obj);
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">Echo Detail</span></div>
 
     <div class="echo-w" style="cursor:default">
@@ -1298,7 +1315,7 @@ function renderMethod(mid){
 
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">${esc(m.name)}</span></div>
     <div style="font-size:11.5px;color:var(--faint);padding:0 2px 14px;line-height:1.6">${esc(m.d)}</div>
     ${body}
@@ -1328,7 +1345,7 @@ function renderGateway(){
 
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">New Starting Points</span></div>
 
     <div class="eyebrow" style="margin:6px 2px 0">Active · You initiate</div>
@@ -1345,7 +1362,7 @@ function renderGateway(){
 function renderInvite(){
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div>
       <span class="ab-title" style="font-size:16px">Invite Family Member</span></div>
 
     <div class="card">
@@ -1377,7 +1394,7 @@ function renderInvite(){
 function renderSettings(){
   return `
   <div class="vp-pad">
-    <div class="appbar"><div class="ab-back" data-act="back">‹</div><span class="ab-title" style="font-size:16px">设置</span></div>
+    <div class="appbar"><div class="ab-back" data-act="back">${I.back}</div><span class="ab-title" style="font-size:16px">设置</span></div>
     <div style="text-align:center;padding:8px 0 16px">${avatar('tina',64)}
       <div style="font-family:var(--serif);font-size:20px;font-weight:600;color:var(--ink);margin-top:10px">Tina</div>
       <div style="font-size:11px;color:var(--faint);margin-top:2px">数字原生回流者 · 深圳</div></div>
@@ -1436,8 +1453,8 @@ function homeTopBar(){
     return `<div class="appbar" style="padding-bottom:4px">
       <span class="ab-title" style="font-family:var(--serif);font-size:20px">物语</span>
       <div class="ab-actions">
-        <div class="ab-ico" data-act="echo" >🔔</div>
-        <div class="ab-ico" data-act="settings">⚙</div>
+        <div class="ab-ico" data-act="echo">${I.bell}</div>
+        <div class="ab-ico" data-act="settings">${I.settings}</div>
       </div></div>`;
   }
   return "";
@@ -1565,7 +1582,7 @@ function render(){
         <div class="vbtn mute"></div><div class="vbtn up"></div><div class="vbtn dn"></div><div class="pwr"></div>
         <div class="screen">
           <div class="notch"></div>
-          <div class="sbar"><span>9:41</span><span class="rgt">📶 5G 🔋</span></div>
+          <div class="sbar"><span>9:41</span><span class="rgt">${SBAR_SIGNAL}${SBAR_WIFI}${SBAR_BATTERY}</span></div>
           ${homeTopBar()}
           <div class="viewport" id="viewport">${screenHtml}</div>
           ${renderTabBar()}
