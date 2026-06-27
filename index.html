@@ -815,9 +815,9 @@ function renderMuseum(){
   }
 
   return `
+  <div class="appbar"><span class="ab-title">Family Memory Museum</span>
+    <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Search · V2 feature">${I.search}</div></div></div>
   <div class="vp-pad">
-    <div class="appbar"><span class="ab-title">Family Memory Museum</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Search · V2 feature">${I.search}</div></div></div>
     <div class="seg">
       <button class="${STATE.museumSeg==='object'?'on':''}" data-act="seg" data-seg="object">By Object</button>
       <button class="${STATE.museumSeg==='method'?'on':''}" data-act="seg" data-seg="method">6 Record Methods</button>
@@ -972,9 +972,9 @@ function renderFamily(){
   }).join("");
 
   return `
+  <div class="appbar"><span class="ab-title">Happy Family</span>
+    <div class="ab-actions"><span data-act="toast" data-msg="Switch family · V2 multi-family" style="font-size:11px;color:var(--vermil);cursor:pointer;padding:0 4px">Switch ⌄</span></div></div>
   <div class="vp-pad">
-    <div class="appbar"><span class="ab-title">Happy Family</span>
-      <div class="ab-actions"><span data-act="toast" data-msg="Switch family · V2 multi-family" style="font-size:11px;color:var(--vermil);cursor:pointer;padding:0 4px">Switch ⌄</span></div></div>
     <div class="fam-head">
       <div class="fam-members">
         ${members}
@@ -1101,9 +1101,9 @@ function renderEcho(){
   if(!body) body = `<div style="text-align:center;color:var(--faint);font-size:12px;padding:30px 0">No Echoes in this category.</div>`;
 
   return `
+  <div class="appbar"><span class="ab-title">Reminders</span>
+    <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Echo settings: 4 trigger types / silent hours">${I.settings}</div></div></div>
   <div class="vp-pad">
-    <div class="appbar"><span class="ab-title">Reminders</span>
-      <div class="ab-actions"><div class="ab-ico" data-act="toast" data-msg="Echo settings: 4 trigger types / silent hours">${I.settings}</div></div></div>
     <div class="echo-filter">${fbar}</div>
     ${body}
   </div>`;
