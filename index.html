@@ -1480,15 +1480,15 @@ function renderTabBar(){
 function renderModal(){
   if(STATE.modal!=="add") return "";
   const caps = [
-    ["📷","拍照"],["🎬","录视频"],["🎙","录音"],
-    ["🖼","选照片"],["📁","选视频"],["🌊","选录音"]
+    ["📷","Take Photo"],["🎬","Record Video"],["🎙","Record Audio"],
+    ["🖼","Choose Photo"],["📁","Choose Video"],["🌊","Choose Audio"]
   ];
   const capHtml = caps.map(([i,l])=>`<div class="cap" data-act="add-capture"><div class="cap-ic">${i}</div><div class="cap-l">${l}</div></div>`).join("");
   return `<div class="modal-mask" data-act="modal-close">
     <div class="sheet" data-stop>
       <div class="sh-bar"></div>
-      <div class="sh-t">记录一件老物</div>
-      <div class="sh-d">拍照 / 录音 / 录像 · 最多 5 张照片或片段</div>
+      <div class="sh-t">Add a Memory Object</div>
+      <div class="sh-d">Photo / Audio / Video · Up to 5 items per entry</div>
       <div class="capgrid">${capHtml}</div>
       <div class="sh-cancel" data-act="modal-close">✕</div>
     </div></div>`;
