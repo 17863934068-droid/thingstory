@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>物语 · Thingstory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Sans+SC:wght@400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F2E8D0;
+  --cream2: #EDE0C4;
+  --cream3: #E5D5B0;
+  --yellow: #F5C842;
+  --yellow-dark: #D4A820;
+  --navy: #1A1F2E;
+  --navy2: #2C3347;
+  --ink: #1C1A16;
+  --rust: #8B3A2A;
+  --sepia: #6B5A3E;
+  --mid: #9A8B72;
+  --light-stroke: #C8B896;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background-color: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 48px;
+  background: rgba(15,12,10,.35);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  transition: background .3s, border-color .3s;
+}
+nav.scrolled {
+  background: rgba(242,232,208,.95);
+  border-bottom-color: var(--light-stroke);
+}
+nav.scrolled .nav-logo { color: var(--ink); }
+nav.scrolled .nav-links a { color: var(--sepia); }
+nav.scrolled .nav-lang { color: var(--mid); border-color: var(--light-stroke); }
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--cream);
+}
+.nav-logo span { color: var(--yellow); }
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: rgba(242,232,208,.7);
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cream); }
+
+.nav-lang {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: rgba(242,232,208,.7);
+  cursor: pointer;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.25);
+  padding: 5px 14px;
+  border-radius: 2px;
+  background: transparent;
+  transition: all 0.2s;
+}
+.nav-lang:hover { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+
+/* ─── HERO ─── */
+#hero {
+  min-height: 100vh;
+  padding: 120px 24px 80px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background: url('1.jpg') center center / cover no-repeat;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,12,10,.55) 0%,
+    rgba(15,12,10,.45) 50%,
+    rgba(15,12,10,.65) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-left {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 720px;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(72px, 10vw, 130px);
+  font-weight: 700;
+  line-height: 0.9;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+.hero-title-en {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 4.5vw, 60px);
+  letter-spacing: 6px;
+  color: rgba(242,232,208,.5);
+  line-height: 1;
+  margin-bottom: 36px;
+}
+
+.hero-desc {
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.85;
+  color: rgba(242,232,208,.8);
+  max-width: 500px;
+  margin-bottom: 44px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--navy);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.hero-cta:hover { background: var(--rust); }
+.hero-cta .arrow { font-size: 18px; }
+
+.hero-right {
+  position: relative;
+  z-index: 1;
+  height: 560px;
+}
+
+/* collage elements */
+.collage-item {
+  position: absolute;
+  transition: transform 0.3s ease;
+}
+.collage-item:hover { transform: scale(1.03) rotate(0deg) !important; }
+
+.col-photo {
+  width: 220px;
+  height: 260px;
+  background: var(--navy2);
+  overflow: hidden;
+  box-shadow: 6px 6px 0 var(--navy);
+}
+.col-photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.1); }
+.col-photo.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  opacity: 0.4;
+}
+
+.col-card {
+  background: #FFFDF5;
+  border: 1px solid var(--light-stroke);
+  padding: 14px 16px;
+  box-shadow: 4px 4px 0 var(--cream3);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--sepia);
+}
+.col-card .card-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 6px;
+}
+.col-card .card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.col-tag {
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+.col-dashed {
+  border: 2px dashed var(--light-stroke);
+  padding: 10px 14px;
+  font-size: 11px;
+  color: var(--mid);
+  background: rgba(255,253,245,0.7);
+}
+
+/* specific positions */
+.ci-1 { top: 20px; left: 30px; transform: rotate(-2deg); }
+.ci-2 { top: 60px; left: 270px; transform: rotate(1.5deg); }
+.ci-3 { top: 310px; left: 10px; transform: rotate(2deg); }
+.ci-4 { top: 340px; left: 260px; transform: rotate(-1deg); }
+.ci-5 { top: 180px; left: 160px; transform: rotate(3deg); z-index: 2; }
+.ci-6 { top: 440px; left: 120px; transform: rotate(-0.5deg); }
+
+/* ─── SECTION SHARED ─── */
+section { position: relative; z-index: 1; }
+
+.section-label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 16px;
+}
+
+/* ─── STATS / PROBLEM ─── */
+#problem {
+  background: var(--navy);
+  padding: 80px 48px;
+  overflow: hidden;
+}
+
+.problem-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.problem-left .section-label { color: var(--mid); }
+.problem-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.problem-left p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #8A8070;
+}
+
+.problem-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.stat-box {
+  background: var(--navy2);
+  padding: 36px 28px;
+  position: relative;
+}
+.stat-box.yellow { background: var(--yellow); }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--yellow);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.stat-unit {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.stat-box.yellow .stat-num { color: var(--navy); }
+.stat-label {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #7A7060;
+}
+.stat-box.yellow .stat-label { color: var(--navy); font-weight: 700; }
+.stat-source {
+  position: absolute;
+  bottom: 10px; right: 12px;
+  font-size: 9px;
+  color: #4A4840;
+  letter-spacing: 1px;
+}
+
+/* ─── HOW IT WORKS ─── */
+#how {
+  padding: 100px 48px;
+  background: var(--cream2);
+}
+
+.how-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+.how-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.how-header .sub {
+  font-size: 14px;
+  color: var(--sepia);
+  max-width: 320px;
+  line-height: 1.7;
+  text-align: right;
+}
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.flow-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--light-stroke) 0, var(--light-stroke) 6px, transparent 6px, transparent 14px);
+  z-index: 0;
+}
+
+.flow-step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.step-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: 2px solid var(--light-stroke);
+  background: var(--cream2);
+  color: var(--sepia);
+  transition: all 0.3s;
+}
+.flow-step.highlight .step-num {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+  box-shadow: 0 4px 16px rgba(245,200,66,0.4);
+}
+
+.step-mode {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+}
+.step-mode.online { background: rgba(245,200,66,0.2); color: var(--yellow-dark); }
+.step-mode.offline { background: rgba(139,58,42,0.1); color: var(--rust); }
+
+.step-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.step-zh { font-size: 11px; color: var(--mid); margin-bottom: 8px; letter-spacing: .3px; }
+.step-desc { font-size: 11px; color: var(--sepia); line-height: 1.65; letter-spacing: .15px; }
+
+/* ─── ARCHIVE ─── */
+#archive {
+  padding: 100px 48px;
+  background: var(--cream);
+}
+
+.archive-inner { max-width: 1200px; margin: 0 auto; }
+
+.archive-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 60px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--light-stroke);
+}
+
+.archive-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.archive-header h2 em {
+  font-style: italic;
+  color: var(--rust);
+}
+
+.archive-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--light-stroke);
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans SC', sans-serif;
+  color: var(--sepia);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  color: var(--ink);
+}
+
+/* object cards */
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.obj-card {
+  background: #FFFDF5;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.obj-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(28,26,22,0.12); }
+
+.obj-card-img {
+  height: 220px;
+  background: var(--navy2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  position: relative;
+  overflow: hidden;
+}
+.obj-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.obj-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(26,31,46,0.5));
+}
+
+.obj-year {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  z-index: 1;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+}
+
+.obj-family {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  background: var(--navy);
+  color: var(--cream);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+}
+
+.obj-card-body { padding: 20px 22px 24px; }
+.obj-num {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.obj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.obj-name-zh { font-size: 13px; color: var(--sepia); margin-bottom: 12px; }
+.obj-excerpt {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--sepia);
+  margin-bottom: 16px;
+}
+.obj-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.obj-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--rust);
+  text-transform: uppercase;
+  background: rgba(139,58,42,0.08);
+  padding: 3px 10px;
+}
+.obj-contrib {
+  font-size: 11px;
+  color: var(--mid);
+}
+
+.obj-open-hint {
+  position: absolute;
+  bottom: 20px;
+  right: 22px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--mid);
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.obj-card:hover .obj-open-hint { opacity: 1; }
+
+/* ─── DETAIL MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,31,46,0.7);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: #FFFDF5;
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+
+.modal-close {
+  position: sticky;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  background: #FFFDF5;
+  border-bottom: 1px solid var(--light-stroke);
+  z-index: 1;
+}
+.close-btn {
+  background: var(--navy);
+  color: var(--cream);
+  border: none;
+  padding: 8px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  transition: background 0.2s;
+}
+.close-btn:hover { background: var(--rust); }
+
+.modal-body { padding: 40px 48px 56px; }
+
+.modal-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.modal-img {
+  height: 280px;
+  background: var(--navy2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+  filter: grayscale(20%);
+  position: relative;
+}
+.modal-img .year-badge {
+  position: absolute;
+  bottom: 0; left: 0;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+}
+
+.modal-info { display: flex; flex-direction: column; justify-content: center; }
+.modal-obj-num {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.modal-obj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.modal-obj-zh { font-size: 16px; color: var(--sepia); margin-bottom: 20px; }
+.modal-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.modal-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--light-stroke);
+  color: var(--sepia);
+}
+.modal-tag.yellow { background: var(--yellow); border-color: var(--yellow); color: var(--ink); }
+
+/* timeline */
+.modal-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cream3);
+}
+
+.timeline {
+  display: flex;
+  gap: 0;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.tl-item {
+  min-width: 130px;
+  flex: 1;
+  position: relative;
+}
+.tl-item::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  right: -50%;
+  height: 1px;
+  background: var(--light-stroke);
+}
+.tl-item:last-child::before { display: none; }
+
+.tl-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--cream2);
+  border: 2px solid var(--light-stroke);
+  margin: 0 auto 12px;
+  position: relative;
+  z-index: 1;
+}
+.tl-item.key .tl-dot {
+  background: var(--yellow);
+  border-color: var(--yellow-dark);
+  width: 20px;
+  height: 20px;
+  margin-top: -2px;
+}
+.tl-year {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.tl-event {
+  font-size: 10.5px;
+  color: var(--sepia);
+  text-align: center;
+  line-height: 1.4;
+  padding: 0 6px;
+}
+
+/* story */
+.story-block {
+  background: var(--cream2);
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+}
+.story-block::before {
+  content: '"';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px;
+  color: var(--yellow);
+  position: absolute;
+  top: -20px;
+  left: 16px;
+  line-height: 1;
+  opacity: 0.6;
+}
+.story-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.9;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.story-attr {
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  position: relative;
+  z-index: 1;
+}
+
+/* dialogue */
+.dialogue { margin-bottom: 32px; }
+.msg {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  align-items: flex-start;
+}
+.msg.right { flex-direction: row-reverse; }
+
+.msg-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--navy2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.msg.right .msg-avatar { background: var(--yellow); }
+
+.msg-bubble {
+  max-width: 360px;
+  padding: 12px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--cream2);
+  border: 1px solid var(--light-stroke);
+}
+.msg.right .msg-bubble {
+  background: rgba(245,200,66,0.15);
+  border-color: rgba(245,200,66,0.4);
+}
+.msg-name {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 4px;
+}
+
+/* ai summary */
+.ai-block {
+  background: var(--navy);
+  padding: 28px 32px;
+  margin-bottom: 12px;
+}
+.ai-label {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+.ai-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #C8B896;
+}
+
+/* ─── VALUE ─── */
+#value {
+  padding: 100px 48px;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+#value::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(245,200,66,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 100% 0%, rgba(139,58,42,.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+.value-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.value-title-wrap { margin-bottom: 64px; }
+.value-headline {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  line-height: 1.15;
+  padding: 10px 24px;
+  margin-top: 16px;
+}
+.value-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.value-col {
+  background: rgba(255,255,255,.04);
+  padding: 40px 44px;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.value-col-label {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 28px;
+}
+.value-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+.value-list li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(242,232,208,.7);
+  padding-left: 18px;
+  position: relative;
+}
+.value-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--yellow);
+  font-size: 14px;
+}
+.value-list li strong { color: var(--cream); font-weight: 700; }
+
+/* ─── CTA ─── */
+#cta {
+  background: var(--navy);
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: '物語';
+  position: absolute;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 400px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.02);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+#cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+#cta p {
+  font-size: 15px;
+  color: #8A8070;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+.cta-tag {
+  display: inline-block;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 16px 40px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cta-tag:hover { transform: scale(1.03); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  padding: 36px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+}
+.footer-logo span { color: var(--yellow); }
+.footer-copy {
+  font-size: 11px;
+  color: #4A4840;
+  letter-spacing: 1px;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #6A6058;
+  text-decoration: none;
+}
+.footer-links a:hover { color: var(--yellow); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream2); }
+::-webkit-scrollbar-thumb { background: var(--light-stroke); border-radius: 3px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease-out both; }
+.fade-up:nth-child(2) { animation-delay: 0.1s; }
+.fade-up:nth-child(3) { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">物語<span>·</span>Thingstory</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#how"     id="nav-how">我们的服务</a></li>
+      <li><a href="#archive" id="nav-archive">档案库</a></li>
+      <li><a href="#value"   id="nav-value">价值主张</a></li>
+      <li><a href="#cta"     id="nav-about">关于</a></li>
+    </ul>
+    <button class="nav-lang" onclick="toggleLang()">中 / EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left fade-up">
+    <div class="hero-title" id="hero-title">物語</div>
+    <div class="hero-title-en">THINGSTORY</div>
+    <p class="hero-desc" id="hero-desc">
+      每一件老物件背后，都藏着一个家族的隐秘历史。<br>
+      我们帮你在它消失之前，把它说出来。
+    </p>
+    <a href="#archive" class="hero-cta">
+      <span id="cta-btn">探索家族档案库</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="problem-inner">
+    <div class="problem-left">
+      <div class="section-label" id="prob-label">/ WHY IT MATTERS /</div>
+      <h2 id="prob-h2">家族记忆<br>正在消失</h2>
+      <p id="prob-p">每一位长辈离去，都带走了一整个家族的历史切片。那些藏在老物件背后的故事，从未被真正说出来，更从未被记录下来。</p>
+    </div>
+    <div class="problem-stats">
+      <div class="stat-box">
+        <div class="stat-num">80<span class="stat-unit" id="stat-unit-1">年</span></div>
+        <div class="stat-label" id="stat1">口述历史将在此年限内自然消失（Assmann，传播记忆理论）</div>
+        <div class="stat-source">JAN ASSMANN</div>
+      </div>
+      <div class="stat-box yellow">
+        <div class="stat-num" style="color:var(--navy)">73%</div>
+        <div class="stat-label" id="stat2">年轻人想了解家族历史，但从未主动发起对话</div>
+        <div class="stat-source" style="color:#5A5040">POLYZOO SURVEY 2026</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1<span class="stat-unit" id="stat-unit-3">次</span></div>
+        <div class="stat-label" id="stat3">大多数家族物件的故事，一生中只被讲述过</div>
+        <div class="stat-source">FIELD RESEARCH</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <div>
+        <div class="section-label" id="how-label">/ SERVICE FLOW /</div>
+        <h2 id="how-h2">我们的服务</h2>
+      </div>
+      <div class="sub" id="how-sub">从发现一件老物件出发，经过家人协同、线下共建、AI蒸馏，形成可持续传递的家族记忆闭环。</div>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="step-num">01</div>
+        <div class="step-mode online">ONLINE</div>
+        <div class="step-name">Discover</div>
+        <div class="step-zh" id="s1-zh">在线发现</div>
+        <div class="step-desc" id="s1-desc">拍摄家中老物件，AI识别年代背景，生成初始问题卡</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">02</div>
+        <div class="step-mode online">ONLINE</div>
+        <div class="step-name">Invite</div>
+        <div class="step-zh" id="s2-zh">邀请家人</div>
+        <div class="step-desc" id="s2-desc">将问题卡分享给其他家人，邀请他们在线补充相关记忆与信息</div>
+      </div>
+      <div class="flow-step highlight">
+        <div class="step-num">03</div>
+        <div class="step-mode offline">OFFLINE</div>
+        <div class="step-name">Co-Build</div>
+        <div class="step-zh" id="s3-zh">线下共建</div>
+        <div class="step-desc" id="s3-desc">带着问题卡，与长辈面对面展开深度对话</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">04</div>
+        <div class="step-mode online">ONLINE</div>
+        <div class="step-name">Distill</div>
+        <div class="step-zh" id="s4-zh">在线蒸馏</div>
+        <div class="step-desc" id="s4-desc">AI将对话转化为结构化叙事，生成时间轴与记忆锚点</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">05</div>
+        <div class="step-mode online">ONLINE</div>
+        <div class="step-name">Archive</div>
+        <div class="step-zh" id="s5-zh">家族存档</div>
+        <div class="step-desc" id="s5-desc">形成物件数字档案卡，可通过NFC与实物绑定</div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">06</div>
+        <div class="step-mode offline">OFFLINE+</div>
+        <div class="step-name">Echo</div>
+        <div class="step-zh" id="s6-zh">循环回响</div>
+        <div class="step-desc" id="s6-desc">系统定期推送记忆提醒，激活新一轮家族对话</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHIVE -->
+<section id="archive">
+  <div class="archive-inner">
+    <div class="archive-header">
+      <div>
+        <div class="section-label" id="arch-label">/ FAMILY ARCHIVE /</div>
+        <h2 id="arch-h2">家族记忆<br><em>档案库</em></h2>
+      </div>
+      <div>
+        <p style="font-size:13px;color:var(--sepia);margin-bottom:20px;line-height:1.7;text-align:right;" id="arch-sub">每件老物件都是一个入口。点击卡片，进入完整家族记忆档案。</p>
+        <div class="archive-filter">
+          <button id="filter-all"     class="filter-btn active" onclick="filterCards('all', this)">全部</button>
+          <button id="filter-antique" class="filter-btn" onclick="filterCards('antique', this)">老物件</button>
+          <button id="filter-craft"   class="filter-btn" onclick="filterCards('craft', this)">手工艺</button>
+          <button id="filter-food"    class="filter-btn" onclick="filterCards('food', this)">食材</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="archive-grid" id="archiveGrid">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- VALUE -->
+<section id="value">
+  <div class="value-inner">
+    <div class="value-title-wrap">
+      <div class="section-label" style="color:var(--mid)" id="val-label">/ 价值主张 /</div>
+      <div class="value-headline" id="val-headline">从一个家庭，到一代人</div>
+    </div>
+    <div class="value-cols">
+      <div class="value-col">
+        <div class="value-col-label" id="val-ind-label">对个人</div>
+        <ul class="value-list">
+          <li id="val-i1"><strong>弥合家庭内部的代际鸿沟。</strong></li>
+          <li id="val-i2">鼓励<strong>年轻人主动走近长辈，理解他们的人生。</strong></li>
+          <li id="val-i3">通过可追溯的共同体验，<strong>加深家人之间的情感连结。</strong></li>
+        </ul>
+      </div>
+      <div class="value-col">
+        <div class="value-col-label" id="val-soc-label">对社会</div>
+        <ul class="value-list">
+          <li id="val-s1">确保<strong>一代人集体记忆的传承与延续。</strong></li>
+          <li id="val-s2">保护正在消逝的<strong>中国家庭地域文化。</strong></li>
+          <li id="val-s3">为一个时代<strong>未被言说的记忆</strong>——以及创伤——赋予叙事。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 id="cta-h2">你家里也有这样一件物件吗？</h2>
+  <p id="cta-p">在它的故事被彻底遗忘之前，用物语把它留下来。</p>
+  <div class="cta-tag" id="cta-main">开始记录 · Start Now</div>
+</section>
+
+<footer>
+  <div class="footer-logo">物語<span>·</span>Thingstory</div>
+  <div class="footer-copy">© 2026 PolyZoo · PolyU School of Design · SD5432</div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Research</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-close">
+      <button class="close-btn" onclick="closeModalBtn()">关闭 CLOSE ×</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- injected -->
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───
+const objects = [
+  {
+    id: 'obj01',
+    img: '2.png',
+    year: '1980',
+    family: '陈氏家族',
+    num: 'OBJECT 01',
+    name: "Dad's Seagull Camera",
+    nameZh: '爸爸的海鸥相机',
+    type: 'antique',
+    tag: '老物件',
+    excerpt: '海鸥4A双镜头相机，上海照相机厂出品。1980年爸爸攒了整整一个月的工资才买下它。',
+    contribs: '2位家族成员参与记录',
+    timeline: [
+      { year: '1980', event: '爸爸攒一个月工资购入，上海照相机厂出品', key: true },
+      { year: '1984', event: '拍摄家族第一张婚礼照片' },
+      { year: '1990s', event: '记录女儿成长，成为家庭专用相机' },
+      { year: '2005', event: '胶卷时代结束，相机入柜保存' },
+      { year: '2024', event: '女儿发现，开始数字存档', key: true },
+    ],
+    story: '那台海鸥4A，我当时攒了整整一个月的工资。1980年，上海照相机厂还是国营的，买一台相机是件大事。我记得拿回家那天，你妈妈说这东西贵，我说贵有贵的道理——用它把你们留住。',
+    storyAttr: '爸爸 口述 · 2024年秋（待补充）',
+    dialogue: [
+      { who: 'young', name: '女儿 Tina', text: '爸，这台相机是什么时候买的？我在柜子里翻到的。' },
+      { who: 'elder', name: '爸爸', text: '海鸥4A，1980年买的。那时候攒了一个月工资，是上海照相机厂出的。' },
+      { who: 'young', name: '女儿 Tina', text: '一个月工资？那时候工资多少？' },
+      { who: 'elder', name: '爸爸', text: '三十几块。相机要一百多。攒了好久。' },
+      { who: 'young', name: '女儿 Tina', text: '为什么那时候一定要买相机？' },
+      { who: 'elder', name: '爸爸', text: '……想把你妈妈留住。' },
+    ],
+    aiSummary: '这台海鸥4A是1980年代上海城市中产家庭经济追求的实物象征。攒一个月工资购入相机，这一行为折射出改革开放初期普通工人对"留住美好"的渴望——既是对物质匮乏年代的突破，也是对家庭记忆主动管理的意识觉醒。"想把你妈妈留住"这句话，将一件工业消费品升华为情感锚点，正是物语服务所寻找的核心叙事节点：最普通的物件背后，藏着最私密的动机。',
+    excerptEn: 'The Seagull 4A twin-lens camera, made at the Shanghai Camera Factory. Dad saved an entire month\'s wages to buy it in 1980.',
+    tagEn: 'ANTIQUE',
+    contribsEn: '2 family members contributed',
+    timelineEn: [
+      { year: '1980', event: "Dad saved a month's wages to buy it — made at the Shanghai Camera Factory", key: true },
+      { year: '1984', event: "Captured the family's first wedding photograph" },
+      { year: '1990s', event: "Documented daughter's childhood; became the family camera" },
+      { year: '2005', event: "The film era ended; the camera was placed in storage" },
+      { year: '2024', event: "Daughter discovered it and began digitally archiving it", key: true },
+    ],
+    storyEn: "That Seagull 4A — I saved an entire month's wages for it. In 1980, the Shanghai Camera Factory was still state-owned; buying a camera was a big deal. I remember the day I brought it home, your mother said it was too expensive. I told her: expensive things have a reason — I wanted to use it to hold onto you.",
+    storyAttrEn: 'Dad, oral account · Autumn 2024 (to be continued)',
+    dialogueEn: [
+      { who: 'young', name: 'Daughter Tina', text: 'Dad, when did you get this camera? I found it in the cabinet.' },
+      { who: 'elder', name: 'Dad', text: "The Seagull 4A, bought in 1980. I saved a whole month's wages — it's from the Shanghai Camera Factory." },
+      { who: 'young', name: 'Daughter Tina', text: "A whole month's wages? What was the salary back then?" },
+      { who: 'elder', name: 'Dad', text: 'Around thirty yuan. The camera was over a hundred. Took a long time to save up.' },
+      { who: 'young', name: 'Daughter Tina', text: 'Why were you so set on buying a camera back then?' },
+      { who: 'elder', name: 'Dad', text: '…I wanted to hold onto your mother.' },
+    ],
+    aiSummaryEn: "This Seagull 4A embodies the economic aspirations of Shanghai's urban working class in the 1980s. Saving a month's wages to buy a camera reflects the ordinary worker's longing to \"hold onto beauty\" in the early Reform era — both a breakthrough against material scarcity and an awakening impulse to preserve family memory. The phrase \"I wanted to hold onto your mother\" elevates an industrial product into an emotional anchor point: this is precisely the core narrative node Thingstory seeks — behind the most ordinary object lies the most private motivation.",
+  },
+  {
+    id: 'obj02',
+    img: '3.png',
+    year: '1955',
+    family: '陈氏家族',
+    num: 'OBJECT 02',
+    name: "Grandma's Dragon Boat Sachet",
+    nameZh: '奶奶的端午香包',
+    type: 'craft',
+    tag: '手工艺',
+    excerpt: '太奶奶传给奶奶的针法，嫁到上海后每年端午亲手缝制，挂在每个孩子床头辟邪保平安。2024年端午节被Tina在柜里发现。',
+    contribs: '4位家族成员参与记录',
+    timeline: [
+      { year: '1955', event: '太奶奶在苏州教奶奶刺绣针法', key: true },
+      { year: '1962', event: '奶奶嫁到上海，当年端午缝制第一个香包' },
+      { year: '1970s', event: '为每个孩子缝制香包，内填艾草与雄黄' },
+      { year: '2000s', event: '年岁渐长，针线活渐少，香包成为珍藏' },
+      { year: '2024', event: 'Tina 端午节翻出香包，开始记录故事', key: true },
+    ],
+    story: '太奶奶教我绣的时候，我才十几岁，在苏州乡下。后来嫁到上海，第一个端午节我就自己做了一个。艾草和雄黄是辟邪的，挂在孩子床头。你爸爸他们小时候，每人床上都挂一个，是我做的。',
+    storyAttr: '奶奶 口述 · 2024年端午（录音12分08秒）',
+    dialogue: [
+      { who: 'young', name: '孙女 Tina', text: '奶奶，这个香包是你做的吗？在柜子最里面找到的。' },
+      { who: 'elder', name: '奶奶', text: '哎呀，这个！是的，我做的。太奶奶教我的针法，苏州那边的绣法。' },
+      { who: 'young', name: '孙女 Tina', text: '里面是什么？还有味道吗？' },
+      { who: 'elder', name: '奶奶', text: '艾草和雄黄。现在没味了，六十多年了嘛。但你爸爸小时候，每年端午我都要做一个挂在他床头。' },
+      { who: 'young', name: '孙女 Tina', text: '太奶奶是怎么教你的？' },
+      { who: 'elder', name: '奶奶', text: '手把手教的。那时候我还小，眼睛好，一针一线都清清楚楚。现在眼睛不行了，看不了细线了。' },
+    ],
+    aiSummary: '这枚香包是跨越三代的手艺传承与迁徙记忆的双重档案。太奶奶→奶奶的针法传递，发生在1950年代苏州乡间；奶奶1962年嫁入上海后，将这门手艺转化为每年端午的家庭仪式。物件中凝结的不仅是刺绣技艺，更是一套完整的家庭关爱表达系统——"挂在孩子床头辟邪"这一行为，将手工劳动直接转化为母性保护的具身实践。对话揭示了"眼睛好"与"眼睛不行了"之间的时间跨度，是本次档案最具情感密度的节点。',
+    excerptEn: 'A needlework technique passed from great-grandmother to grandmother. After moving to Shanghai, Grandma hand-stitched a sachet every Dragon Boat Festival to hang above each child\'s bed for protection. Discovered by Tina in 2024.',
+    tagEn: 'CRAFT',
+    contribsEn: '4 family members contributed',
+    timelineEn: [
+      { year: '1955', event: 'Great-grandmother taught Grandma embroidery in Suzhou', key: true },
+      { year: '1962', event: "Grandma moved to Shanghai; made her first sachet that Dragon Boat Festival" },
+      { year: '1970s', event: 'Made sachets filled with mugwort and realgar for each child' },
+      { year: '2000s', event: 'As she aged, needlework grew less frequent; sachets became keepsakes' },
+      { year: '2024', event: 'Tina found the sachet and began recording its story', key: true },
+    ],
+    storyEn: "When great-grandmother taught me to embroider, I was just a teenager, in the countryside around Suzhou. After I moved to Shanghai, I made one every Dragon Boat Festival. The mugwort and realgar ward off evil — you hang them above the children's beds. Your father and his siblings each had one above their bed when they were small. I made every one of them.",
+    storyAttrEn: 'Grandma, oral account · Dragon Boat Festival 2024 (audio: 12 min 08 sec)',
+    dialogueEn: [
+      { who: 'young', name: 'Granddaughter Tina', text: 'Grandma, did you make this sachet? I found it deep in the cabinet.' },
+      { who: 'elder', name: 'Grandma', text: "Oh, this one! Yes, I made it. The stitching is what great-grandmother taught me — Suzhou-style embroidery." },
+      { who: 'young', name: 'Granddaughter Tina', text: "What's inside? Does it still have a scent?" },
+      { who: 'elder', name: 'Grandma', text: "Mugwort and realgar. No scent now — it's been over sixty years. But when your father was little, I made one every Dragon Boat Festival and hung it above his bed." },
+      { who: 'young', name: 'Granddaughter Tina', text: 'How did great-grandmother teach you?' },
+      { who: 'elder', name: 'Grandma', text: "Hand by hand. I was young then, eyes were sharp, every stitch was clear. Now my eyes can't manage fine thread anymore." },
+    ],
+    aiSummaryEn: "This sachet is a dual archive — a craft lineage spanning three generations and a memory of migration. The transmission of needlework from great-grandmother to grandmother took place in 1950s rural Suzhou; after Grandma moved to Shanghai in 1962, she transformed the craft into an annual Dragon Boat Festival ritual. The object embodies not just embroidery technique, but a complete system of familial care — \"hanging it above the children's beds for protection\" is a direct conversion of hand labour into embodied maternal protection. The dialogue reveals a temporal span between \"eyes were sharp\" and \"eyes can't manage fine thread anymore\" — the most emotionally dense node in this archive.",
+  },
+  {
+    id: 'obj03',
+    img: '4.png',
+    year: '2018',
+    family: '陈氏家族',
+    num: 'OBJECT 03',
+    name: "Mom's Aged Tangerine Peel Jar",
+    nameZh: '妈妈的陈皮罐',
+    type: 'food',
+    tag: '食材',
+    excerpt: '每年冬天妈妈剥新会柑橘，把晒干的橘皮一层层叠入玻璃罐。现已积累7年，越陈越香——一件还在生长中的传家物。',
+    contribs: '3位家族成员参与记录',
+    timeline: [
+      { year: '2018', event: '奶奶咳嗽，中医建议用陈皮，妈妈开始自制', key: true },
+      { year: '2019', event: '第二层陈皮叠入，开始成为年度仪式' },
+      { year: '2021', event: 'Tina 开始意识到这罐子正在成为传家物' },
+      { year: '2024', event: '第7层入罐，开始数字存档', key: true },
+      { year: '未来', event: '20年后，这将是"妈妈留下的东西"' },
+    ],
+    story: '奶奶那时候咳嗽，中医说陈皮好，越陈越好，自己晒的最干净。从那年冬天开始，我每年都剥新会的橘子，晒干了放进去。现在有七年了，你往下翻，越深颜色越深，味道越浓。',
+    storyAttr: '妈妈 语音留言 · 2024年12月（录音3分41秒）',
+    dialogue: [
+      { who: 'young', name: '女儿 Tina', text: '妈，这罐陈皮是从哪年开始的？' },
+      { who: 'elder', name: '妈妈', text: '等我想想……应该是奶奶那次咳嗽那年，中医说陈皮好，越老越好。' },
+      { who: 'young', name: '女儿 Tina', text: '就是2018年对吗？' },
+      { who: 'elder', name: '妈妈', text: '对对，那年冬天。我就开始自己晒，每年放一层进去。' },
+      { who: 'young', name: '女儿 Tina', text: '你有没有想过，这罐东西以后会变成传家物？' },
+      { who: 'elder', name: '妈妈', text: '……没想那么多。就是觉得扔了可惜，年年放，放着放着就成习惯了。' },
+    ],
+    aiSummary: '这罐陈皮是一件"仍在生长中"的传家物——其独特性在于，档案记录开始于物件形成过程之中，而非完成之后。每年一层的积累结构，使时间本身成为物件的核心材料：越深处的橘皮，承载的时间越久，香气越浓。起因是奶奶的咳嗽，这将一个日常的保健行为连接到了代际关怀的叙事脉络中。Tina的发问"会不会成为传家物"，以及妈妈"没想那么多"的回答，精准揭示了物语服务的核心洞察：大多数家族记忆的形成，并非出于刻意——正因如此，更需要被及时记录下来。',
+    excerptEn: 'Every winter, Mom peels Xinhui tangerines and layers the sun-dried peel into a glass jar. Seven years of layers now accumulated — an heirloom still growing.',
+    tagEn: 'FOOD',
+    contribsEn: '3 family members contributed',
+    timelineEn: [
+      { year: '2018', event: "Grandma's cough; a doctor recommended tangerine peel. Mom began making her own.", key: true },
+      { year: '2019', event: 'A second layer added; it became an annual ritual' },
+      { year: '2021', event: 'Tina began to sense the jar was becoming a family heirloom' },
+      { year: '2024', event: 'The 7th layer added; digital archiving begins', key: true },
+      { year: 'Future', event: 'In 20 years, this will be "something Mom left behind"' },
+    ],
+    storyEn: "Grandma had a cough back then, and the Chinese doctor said tangerine peel was good — the older the better, and homemade is cleanest. So that winter, I started peeling Xinhui tangerines every year, drying them and putting them in the jar. There are seven years' worth now. If you reach your hand down, the deeper you go, the darker the colour and the stronger the fragrance.",
+    storyAttrEn: 'Mom, voice message · December 2024 (audio: 3 min 41 sec)',
+    dialogueEn: [
+      { who: 'young', name: 'Daughter Tina', text: 'Mom, what year did you start this jar of tangerine peel?' },
+      { who: 'elder', name: 'Mom', text: "Let me think… it must have been the year Grandma had that cough. The doctor said tangerine peel was good — the older the better." },
+      { who: 'young', name: 'Daughter Tina', text: 'That was 2018, right?' },
+      { who: 'elder', name: 'Mom', text: 'Right, that winter. I started drying them myself and adding a layer every year.' },
+      { who: 'young', name: 'Daughter Tina', text: 'Have you ever thought this jar might become a family heirloom someday?' },
+      { who: 'elder', name: 'Mom', text: "…I never thought that far ahead. I just felt it was a waste to throw them away. Year after year, it became a habit." },
+    ],
+    aiSummaryEn: "This jar of tangerine peel is an heirloom \"still in the making\" — its uniqueness lies in the fact that archiving began while the object was still being formed, not after completion. The layered accumulation, one stratum per year, makes time itself the core material: the deeper the peel, the longer it has aged and the richer its fragrance. Its origin in Grandma's cough connects an everyday health practice to the narrative of intergenerational care. Tina's question — \"Could this become a family heirloom?\" — and Mom's reply, \"I never thought that far ahead,\" precisely illuminate Thingstory's core insight: most family memories form unintentionally — which is exactly why they must be recorded before they fade.",
+  }
+];
+
+// ─── RENDER CARDS ───
+let currentFilter = 'all';
+
+function renderCards(filter) {
+  const grid = document.getElementById('archiveGrid');
+  const filtered = filter === 'all' ? objects : objects.filter(o => o.type === filter);
+  grid.innerHTML = filtered.map(o => `
+    <div class="obj-card" onclick="openModal('${o.id}')">
+      <div class="obj-card-img">
+        ${o.img ? `<img src="${o.img}" alt="${isEn ? o.name : o.nameZh}">` : `<span>${o.emoji||''}</span>`}
+        <div class="obj-year">${o.year}</div>
+        <div class="obj-family">${o.family}</div>
+      </div>
+      <div class="obj-card-body">
+        <div class="obj-num">${o.num}</div>
+        <div class="obj-name">${isEn ? o.name : o.nameZh}</div>
+        <div class="obj-name-zh">${isEn ? '' : o.name}</div>
+        <div class="obj-excerpt">${isEn ? o.excerptEn : o.excerpt}</div>
+        <div class="obj-meta">
+          <div class="obj-tag">${isEn ? o.tagEn : o.tag}</div>
+          <div class="obj-contrib">👥 ${isEn ? o.contribsEn : o.contribs}</div>
+        </div>
+      </div>
+      <div class="obj-open-hint">${isEn ? 'Open Archive →' : '查看档案 →'}</div>
+    </div>
+  `).join('');
+}
+
+function filterCards(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(type);
+}
+
+// ─── MODAL ───
+function openModal(id) {
+  const o = objects.find(x => x.id === id);
+  if (!o) return;
+
+  const dialogue = isEn ? o.dialogueEn : o.dialogue;
+  const timeline = isEn ? o.timelineEn : o.timeline;
+
+  const dialogueHtml = dialogue.map(d => `
+    <div class="msg ${d.who === 'young' ? 'right' : ''}">
+      <div class="msg-avatar">${d.who === 'young' ? '👧' : '👴'}</div>
+      <div class="msg-bubble">
+        <div class="msg-name">${d.name}</div>
+        ${d.text}
+      </div>
+    </div>
+  `).join('');
+
+  const timelineHtml = timeline.map(t => `
+    <div class="tl-item ${t.key ? 'key' : ''}">
+      <div class="tl-dot"></div>
+      <div class="tl-year">${t.year}</div>
+      <div class="tl-event">${t.event}</div>
+    </div>
+  `).join('');
+
+  const yearBadge = isEn ? `Est. ${o.year}` : `始于 ${o.year}`;
+  const primaryName = isEn ? o.name : o.nameZh;
+  const secondaryName = isEn ? o.nameZh : o.name;
+  const excerpt = isEn ? o.excerptEn : o.excerpt;
+  const story = isEn ? o.storyEn : o.story;
+  const storyAttr = isEn ? o.storyAttrEn : o.storyAttr;
+  const tag = isEn ? o.tagEn : o.tag;
+  const tlLabel = isEn ? 'Timeline' : '物件时间轴 / Timeline';
+  const voiceLabel = isEn ? "Elder's Voice" : "长辈口述 / Elder's Voice";
+  const convoLabel = isEn ? 'Conversation' : '对话片段 / Conversation';
+  const aiLabel = isEn ? 'AI Narrative' : 'AI 叙事重构 / AI Narrative';
+  const aiSummary = isEn ? o.aiSummaryEn : o.aiSummary;
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-header">
+      <div class="modal-img">
+        ${o.img ? `<img src="${o.img}" alt="${primaryName}" style="width:100%;height:100%;object-fit:cover;display:block;">` : `<span style="font-size:96px">${o.emoji||''}</span>`}
+        <div class="year-badge">${yearBadge}</div>
+      </div>
+      <div class="modal-info">
+        <div class="modal-obj-num">${o.num} · ${o.family}</div>
+        <div class="modal-obj-name">${primaryName}</div>
+        <div class="modal-obj-zh">${secondaryName}</div>
+        <div class="modal-tags">
+          <div class="modal-tag yellow">${tag}</div>
+          <div class="modal-tag">${o.family}</div>
+          <div class="modal-tag">${yearBadge}</div>
+        </div>
+        <div style="font-size:13px;color:var(--sepia);line-height:1.7;">${excerpt}</div>
+      </div>
+    </div>
+
+    <div class="modal-section-title">${tlLabel}</div>
+    <div class="timeline">${timelineHtml}</div>
+
+    <div class="modal-section-title">${voiceLabel}</div>
+    <div class="story-block">
+      <div class="story-text">${story}</div>
+      <div class="story-attr">— ${storyAttr}</div>
+    </div>
+
+    <div class="modal-section-title">${convoLabel}</div>
+    <div class="dialogue">${dialogueHtml}</div>
+
+    <div class="modal-section-title">${aiLabel}</div>
+    <div class="ai-block">
+      <div class="ai-label">✦ THINGSTORY AI DISTILLATION</div>
+      <div class="ai-text">${aiSummary}</div>
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModalBtn();
+});
+
+// ─── LANG TOGGLE ───
+let isEn = false;
+const copy = {
+  zh: {
+    'hero-title': '物語',
+    'hero-desc': '每一件老物件背后，都藏着一个家族的隐秘历史。<br>我们帮你在它消失之前，把它说出来。',
+    'cta-btn': '探索家族档案库',
+    'nav-how': '我们的服务', 'nav-archive': '档案库', 'nav-value': '价值主张', 'nav-about': '关于',
+    'prob-label': '/ 为什么重要 /',
+    'prob-h2': '家族记忆<br>正在消失',
+    'prob-p': '每一位长辈离去，都带走了一整个家族的历史切片。那些藏在老物件背后的故事，从未被真正说出来，更从未被记录下来。',
+    'stat-unit-1': '年', 'stat-unit-3': '次',
+    'stat1': '口述历史将在此年限内自然消失（Assmann，传播记忆理论）',
+    'stat2': '年轻人想了解家族历史，但从未主动发起对话',
+    'stat3': '大多数家族物件的故事，一生中只被讲述过',
+    'how-label': '/ 服务流程 /',
+    'how-h2': '我们的服务',
+    'how-sub': '从发现一件老物件出发，经过家人协同、线下共建、AI蒸馏，形成可持续传递的家族记忆闭环。',
+    's1-zh': '在线发现', 's1-desc': '拍摄家中老物件，AI识别年代背景，生成初始问题卡',
+    's2-zh': '邀请家人', 's2-desc': '将问题卡分享给其他家人，邀请他们在线补充相关记忆与信息',
+    's3-zh': '线下共建', 's3-desc': '带着问题卡，与长辈面对面展开深度对话',
+    's4-zh': '在线蒸馏', 's4-desc': 'AI将对话转化为结构化叙事，生成时间轴与记忆锚点',
+    's5-zh': '家族存档', 's5-desc': '形成物件数字档案卡，可通过NFC与实物绑定',
+    's6-zh': '循环回响', 's6-desc': '系统定期推送记忆提醒，激活新一轮家族对话',
+    'arch-label': '/ 家族档案库 /',
+    'arch-h2': '家族记忆<br><em>档案库</em>',
+    'arch-sub': '每件老物件都是一个入口。点击卡片，进入完整家族记忆档案。',
+    'filter-all': '全部', 'filter-antique': '老物件', 'filter-craft': '手工艺', 'filter-food': '食材',
+    'val-label': '/ 价值主张 /',
+    'val-headline': '从一个家庭，到一代人',
+    'val-ind-label': '对个人',
+    'val-i1': '<strong>弥合家庭内部的代际鸿沟。</strong>',
+    'val-i2': '鼓励<strong>年轻人主动走近长辈，理解他们的人生。</strong>',
+    'val-i3': '通过可追溯的共同体验，<strong>加深家人之间的情感连结。</strong>',
+    'val-soc-label': '对社会',
+    'val-s1': '确保<strong>一代人集体记忆的传承与延续。</strong>',
+    'val-s2': '保护正在消逝的<strong>中国家庭地域文化。</strong>',
+    'val-s3': '为一个时代<strong>未被言说的记忆</strong>——以及创伤——赋予叙事。',
+    'cta-h2': '你家里也有这样一件物件吗？',
+    'cta-p': '在它的故事被彻底遗忘之前，用物语把它留下来。',
+    'cta-main': '开始记录 · Start Now',
+  },
+  en: {
+    'hero-title': 'Thing Story',
+    'hero-desc': 'Behind every old object lies a family\'s hidden history.<br>We help you tell it before it disappears.',
+    'cta-btn': 'Explore the Family Archive',
+    'nav-how': 'Our Service', 'nav-archive': 'Archive', 'nav-value': 'Value', 'nav-about': 'About',
+    'prob-label': '/ WHY IT MATTERS /',
+    'prob-h2': 'Family Memory<br>Is Disappearing',
+    'prob-p': 'Every elder\'s passing takes with it an irreplaceable slice of family history. The stories behind old objects have never truly been told, let alone recorded.',
+    'stat-unit-1': '', 'stat-unit-3': '',
+    'stat1': 'years before oral history naturally fades (Assmann, Communicative Memory)',
+    'stat2': 'of young people want to know their family history, but have never started a conversation',
+    'stat3': 'most family object stories are only ever told once in a lifetime',
+    'how-label': '/ SERVICE FLOW /',
+    'how-h2': 'Our Service',
+    'how-sub': 'From discovering one heirloom to family collaboration, offline co-building, and AI distillation — a sustainable family memory loop.',
+    's1-zh': 'Online Discovery', 's1-desc': 'Photograph a family heirloom. AI identifies its era and generates an initial set of story prompts.',
+    's2-zh': 'Invite Family',    's2-desc': 'Share the prompt card with other family members online, inviting them to contribute related memories.',
+    's3-zh': 'Offline Co-Build', 's3-desc': 'Bring the prompts to a face-to-face conversation with elders for an in-depth dialogue.',
+    's4-zh': 'AI Distillation',  's4-desc': 'AI transforms the conversation into a structured narrative, generating a timeline and memory anchors.',
+    's5-zh': 'Family Archive',   's5-desc': 'Create a digital archive card for the object, linkable to the physical item via NFC.',
+    's6-zh': 'Echo Loop',        's6-desc': 'The system sends timely memory reminders to spark new rounds of family conversation.',
+    'arch-label': '/ FAMILY ARCHIVE /',
+    'arch-h2': 'Family Memory<br><em>Archive</em>',
+    'arch-sub': 'Every old object is a doorway. Click a card to enter its full family memory archive.',
+    'filter-all': 'ALL', 'filter-antique': 'OBJECT', 'filter-craft': 'CRAFT', 'filter-food': 'FOOD',
+    'val-label': '/ VALUE ELEVATION /',
+    'val-headline': 'From One Family to a Generation',
+    'val-ind-label': 'FOR THE INDIVIDUAL',
+    'val-i1': '<strong>Bridge the generation gap</strong> within families.',
+    'val-i2': 'Encourage <strong>young people to proactively understand their elders.</strong>',
+    'val-i3': '<strong>Strengthen emotional bonds</strong> through shared, traceable experiences.',
+    'val-soc-label': 'FOR SOCIETY',
+    'val-s1': 'Ensure the <strong>transmission of a generation\'s collective memory.</strong>',
+    'val-s2': 'Preserve the <strong>disappearing regional culture</strong> of Chinese families.',
+    'val-s3': 'Give narrative to the <strong>unspoken memories</strong> — and traumas — of an era.',
+    'cta-h2': 'Do you have an object like this at home?',
+    'cta-p': 'Before its story is completely forgotten — preserve it with Thingstory.',
+    'cta-main': '开始记录 · Start Now',
+  }
+};
+
+function toggleLang() {
+  isEn = !isEn;
+  const lang = isEn ? 'en' : 'zh';
+  Object.keys(copy[lang]).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = copy[lang][id];
+  });
+  renderCards(currentFilter);
+}
+
+// ─── NAV SCROLL STATE ───
+const navEl = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// ─── INIT ───
+renderCards('all');
+</script>
+</body>
+</html>
