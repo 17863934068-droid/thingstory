@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -41,12 +41,12 @@ export default async function handler(req, res) {
       }
     );
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const err = await response.text();
-      return res.status(500).json({ error: err });
+      return res.status(500).json({ error: JSON.stringify(data) });
     }
 
-    const data = await response.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) return res.status(500).json({ error: 'Parse failed', raw: text });
@@ -55,4 +55,4 @@ export default async function handler(req, res) {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
-}
+};
