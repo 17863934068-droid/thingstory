@@ -703,29 +703,29 @@ const FOLLOWUPS = {
 
 // 产品目录
 const PRODUCTS = [
-  {id:"card", e:"🪪", c:"#a9692a", t:"PRESERVE",
-   zh:{n:"故事卡片", d:"把一次对话浓缩成一张可分享的卡片：物件来历、关键人物、情感内核。", long:"系统把零散的对话整理成结构化卡片 — 香包是谁做的、从哪里来、为什么留着、背后的感情。可以转发给任何家人,他们不需要再听一遍录音。", scen:"端午 Tina 把卡片发到家人群,远房表姐没在场,也能在 30 秒内知道这只香包的故事。"},
-   en:{n:"Story Card", d:"Condense a conversation into a shareable card: object origins, key people, emotional core.", long:"The system organizes scattered conversations into a structured card — who made the sachet, where it came from, why it was kept, the feeling behind it. Share with any family member; they won't need to listen to the recording.", scen:"Tina shares the card to the family chat on Dragon Boat Festival. A distant cousin who wasn't there can learn the sachet's story in 30 seconds."}},
+  {id:"card", e:"📖", c:"#a9692a", t:"DISTILL",
+   zh:{n:"故事卡片", d:"把一次对话提炼成可分享的图文卡片。", long:"系统把零散的对话整理成结构化卡片 — 香包是谁做的、从哪里来、为什么留着、背后的感情。可以转发给任何家人,他们不需要再听一遍录音。", scen:"端午 Tina 把卡片发到家人群,远房表姐没在场,也能在 30 秒内知道这只香包的故事。"},
+   en:{n:"Story Card", d:"Distill a conversation into a shareable image-text card.", long:"The system organizes scattered conversations into a structured card — who made the sachet, where it came from, why it was kept, the feeling behind it. Share with any family member; they won't need to listen to the recording.", scen:"Tina shares the card to the family chat on Dragon Boat Festival. A distant cousin who wasn't there can learn the sachet's story in 30 seconds."}},
 
-  {id:"timeline", e:"🧭", c:"#b3402f", t:"PRESERVE",
-   zh:{n:"时间轴", d:"把跨代的事件串成一条线,看物件如何在家族里走过。", long:"从太外婆教针法那年,到奶奶嫁到上海,到 Tina 收下这只香包 — 年份、地点、人物、关键事件,全部排在一条时间线上。", scen:"五年后 Tina 翻看,1955 苏州 → 1962 上海 → 1985 床头 → 2024 接收,这只香包的完整轨迹一眼可见。"},
-   en:{n:"Timeline", d:"Thread cross-generational events into one line, tracing how an object traveled through the family.", long:"From the year great-grandmother taught needlework, to Grandma marrying to Shanghai, to Tina receiving the sachet — years, places, people, and key events, all on one timeline.", scen:"Five years later Tina looks back: 1955 Suzhou → 1962 Shanghai → 1985 bedside → 2024 received. The sachet's full journey at a glance."}},
+  {id:"voice", e:"🎙", c:"#b3402f", t:"ARCHIVE",
+   zh:{n:"声音档案", d:"奶奶的声音本身就是档案 — 带关键时间戳的转录。", long:"这次对话产生的所有原始录音全部归档保存,系统自动转录并标注关键时间戳 — 让声音可检索、可回放、可传承。", scen:"十年后家里再有人想做香包,翻出这份声音档案,奶奶讲过的每一个细节都还在,一字不差。"},
+   en:{n:"Voice Archive", d:"Grandma's voice is itself the archive — transcribed with key timestamps.", long:"All recordings from the conversation are archived, automatically transcribed and annotated with key timestamps — making voice searchable, replayable, and inheritable.", scen:"Ten years later, someone wants to make sachets. They pull up the voice archive — every detail Grandma described is still there, word for word."}},
 
-  {id:"archive", e:"📦", c:"#6b6258", t:"PRESERVE",
-   zh:{n:"数字档案", d:"录音、照片、家人补充全打包归档,长期可调取、可补全。", long:"这次对话产生的所有原始素材 — 奶奶 12 分钟录音、香包 7 张照片、家人 4 条补充、Tina 的笔记 — 全部打包成数字档案,云端长期保存,未来还能继续往里加东西。", scen:"十年后家里再有人结婚,想做香包送给孙辈,翻出这份档案,奶奶讲过的全部细节都还在。"},
-   en:{n:"Digital Archive", d:"Recording, photos, and family additions packaged for long-term storage and retrieval.", long:"All raw materials from this conversation — Grandma's 12-min recording, 7 sachet photos, 4 family additions, Tina's notes — packaged as a digital archive, stored long-term in the cloud, open for future additions.", scen:"Ten years later, someone in the family wants to make sachets for grandchildren. They pull up the archive — every detail Grandma described is still there."}},
+  {id:"map", e:"🗺", c:"#7a8c6f", t:"MAP",
+   zh:{n:"记忆地图", d:"把人物、物件、地点织成一张地图 — 看见迁徙轨迹。", long:"随着不同物件、不同亲戚的故事累积,系统把它们织成一张家族记忆地图 — 谁在哪里留下了什么记忆,半张家族的轨迹连起来。", scen:"积累了十几只物件后,Tina 第一次看见 — 奶奶这一脉的手艺,从苏州乡下到上海弄堂到深圳客厅,一条线浮现出来。"},
+   en:{n:"Memory Map", d:"Weave people, objects, and places into one map — see the migration trail.", long:"As stories from different objects and relatives accumulate, the system weaves them into a family memory map — who left what memory where, half a family's trajectory connected.", scen:"After ten or more objects, Tina sees it for the first time: Grandma's craft lineage, from a Suzhou village to a Shanghai lane house to a Shenzhen living room — one line emerges."}},
 
-  {id:"cards", e:"🗂", c:"#caa15a", t:"DEEPEN",
-   zh:{n:"对话提示卡", d:"对话前生成,降低开口门槛,把'不知道问什么'变成'照着卡片问'。", long:"基于家人已经补充的线索生成,确保问题不重复、有方向。让面对面那次对话不被「应该问什么」卡住。", scen:"下次回家,Tina 想问柜子里那件旗袍,服务为旗袍生成新一组卡片 — 同一套方法,新一只物件。"},
-   en:{n:"Conversation Cards", d:"Generated before the conversation to lower the barrier — turning 'I don't know what to ask' into 'just follow the cards'.", long:"Generated from clues already added by family, ensuring questions don't repeat and have direction. So the face-to-face conversation isn't stuck on 'what should I ask?'", scen:"Next time home, Tina wants to ask about a qipao in the cabinet. The service generates a new set of cards for it — same method, new object."}},
+  {id:"prompts", e:"🗂", c:"#8c2f23", t:"CONTINUE",
+   zh:{n:"对话提示", d:"从现有内容生成下一个问题列表 — 故事继续延伸。", long:"基于家人已经补充的线索生成,确保问题不重复、有方向。让面对面那次对话不被「应该问什么」卡住。", scen:"下次回家,Tina 想问柜子里那件旗袍,服务为旗袍生成新一组提示 — 同一套方法,新一只物件。"},
+   en:{n:"Conversation Prompts", d:"Generate a next-question list from existing content — the story keeps going.", long:"Generated from clues already added by family, ensuring questions don't repeat and have direction. So the face-to-face conversation isn't stuck on 'what should I ask?'", scen:"Next time home, Tina wants to ask about a qipao in the cabinet. The service generates a new set of prompts for it — same method, new object."}},
 
-  {id:"nfc", e:"🔖", c:"#8a6d3b", t:"EXTENSION",
-   zh:{n:"NFC 记忆标签", d:"贴在真实物件上,任何家人手机一碰就能看到这件物的全部记忆。", long:"把数字记忆锚回物件本体。标签贴在香包上,姑姑下次来家手机一碰,香包的完整故事浮现 — 自然开启新一轮对话,顺带补一些她记得而妈妈忘了的细节。", scen:"姑姑过年来家,看到香包贴着标签,碰一下手机,「哎你妈没告诉你那年其实是…」新的一段录音又产生。"},
-   en:{n:"NFC Memory Tag", d:"Stick it on the real object — any family member taps their phone to see its full memory.", long:"Anchoring digital memory back to the physical object. The tag on the sachet means next time Auntie visits and taps her phone, the full story surfaces — naturally opening a new conversation and adding details Mom forgot.", scen:"Auntie visits for the new year, sees the tagged sachet, taps her phone: 'Oh, your mom didn't tell you — that year it was actually…' A new recording is born."}},
+  {id:"video", e:"🎬", c:"#7a5a1f", t:"GENERATE",
+   zh:{n:"场景视频", d:"AI 把口述场景变成短片 — 让 50 年前变得可见。", long:"根据长辈口述的场景描述,AI 生成对应的短片画面 — 那些只存在于记忆里的地方和时刻,第一次变得可见。", scen:"奶奶描述过 1962 年上海弄堂里做香包的那个下午,系统把那段口述变成一段 30 秒的短片,Tina 第一次「看见」了那个场景。"},
+   en:{n:"Scene Video", d:"AI turns oral scenes into short films — making 50 years ago visible.", long:"Based on the elder's oral descriptions, AI generates corresponding short film visuals — places and moments that only existed in memory become visible for the first time.", scen:"Grandma described the afternoon in a 1962 Shanghai lane house making sachets. The system turns that narration into a 30-second film. Tina sees that scene for the first time."}},
 
-  {id:"map", e:"🗺", c:"#7a5a1f", t:"EXTENSION",
-   zh:{n:"家族记忆地图", d:"把不同亲戚、不同物件、不同地点的记忆,织成一张家族网络。", long:"随着不同物件、不同亲戚的故事累积,系统把它们织成一张家族记忆地图 — 谁在哪里留下了什么记忆,半张家族的轨迹连起来。", scen:"积累了十几只物件后,Tina 第一次看见 — 奶奶这一脉的手艺,从苏州乡下到上海弄堂到深圳客厅,一条线浮现出来。"},
-   en:{n:"Memory Map", d:"Weave memories from different relatives, objects, and places into a family network.", long:"As stories from different objects and relatives accumulate, the system weaves them into a family memory map — who left what memory where, half a family's trajectory connected.", scen:"After ten or more objects, Tina sees it for the first time: Grandma's craft lineage, from a Suzhou village to a Shanghai lane house to a Shenzhen living room — one line emerges."}}
+  {id:"model3d", e:"🧊", c:"#c98b2e", t:"TWIN",
+   zh:{n:"3D 模型", d:"几张照片变成可旋转的数字孪生 — 物件永远存在。", long:"用几张不同角度的照片,AI 重建出物件的三维数字孪生体 — 可旋转、可放大、可永久保存。即使实物损坏或丢失,记忆里的那件物依然完整。", scen:"香包年久褪色,但它的数字孪生体永远保持最初收到时的样子 — Tina 的孩子以后还能旋转着看这只香包的每一个角度。"},
+   en:{n:"3D Model", d:"A few photos become a rotatable digital twin — the object lives forever.", long:"From a few photos taken at different angles, AI reconstructs a 3D digital twin — rotatable, zoomable, and permanently preserved. Even if the physical object is damaged or lost, its memory remains whole.", scen:"The sachet fades over the years, but its digital twin stays as it looked when first received. Tina's children can still rotate and examine every angle of this sachet."}}
 ];
 
 // Stage 6 · 活动推荐
