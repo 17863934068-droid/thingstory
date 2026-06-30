@@ -1255,7 +1255,7 @@ let S = {
   recording:null,
   recT:0,
   followups:[],     // {basis,q,used}
-  selectedTypes:['card','timeline','archive','nfc'],  // P4 多选,默认全选
+  selectedTypes:['card','voice','map','prompts','video','model3d'],  // P4 多选,默认全选
   generated:false,
   echoEnabled:[],   // P6 已加入提醒的 echo 索引
   expandedActivities:[],  // P6 已展开的非推荐 activity 索引
@@ -1353,7 +1353,7 @@ function draw(){
             </div>
             <div class="appbar">
               <span class="back" onclick="prev()">${_navHistory.length>0?'‹':''}</span>
-              <span class="ttl">${s.t}</span>
+              <span class="ttl">${T(s.t.zh, s.t.en)}</span>
               <span class="step">${s.step}</span>
             </div>
             <div class="scr-body" id="scrbody">${s.render()}</div>
