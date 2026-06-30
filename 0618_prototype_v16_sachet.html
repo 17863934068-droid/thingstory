@@ -968,22 +968,24 @@ const ST = [
     h:{zh:"一次对话 · 沉淀成 <em>图鉴</em>", en:"One conversation · preserved as a <em>record</em>"},
     role:{zh:"Tina · 一个人 · 线上", en:"Tina · solo · online"},
     rail:[
-      {zh:["用户做了什么","Tina 回到自己房间,点一下「生成」。系统把奶奶 12 分钟的录音、家人的 4 条补充、香包的 7 张照片,整理成 <b>故事卡片</b> + <b>时间轴</b> + <b>数字档案</b>。"],
-       en:["What the user does","Tina returns to her room and taps \"Generate\". The system takes Grandma's 12-minute recording, 4 family additions, and 7 sachet photos, and organizes them into a <b>Story Card</b> + <b>Timeline</b> + <b>Digital Archive</b>."]}
+      {zh:["用户做了什么","Tina 回到自己房间,点一下「生成」。系统把奶奶 12 分钟的录音、家人的 4 条补充、香包的 7 张照片,整理成 <b>故事卡片</b> + <b>声音档案</b> + <b>记忆地图</b>。"],
+       en:["What the user does","Tina returns to her room and taps \"Generate\". The system takes Grandma's 12-minute recording, 4 family additions, and 7 sachet photos, and organizes them into a <b>Story Card</b> + <b>Voice Archive</b> + <b>Memory Map</b>."]}
     ],
     prods:[
-      {zh:["🪪","故事卡片","可发给任何亲戚"],    en:["🪪","Story Card","Share with any relative"]},
-      {zh:["🧭","时间轴","跨代脉络一眼可见"],    en:["🧭","Timeline","Cross-generational arc at a glance"]},
-      {zh:["📦","数字档案","长期保存的素材包"],  en:["📦","Digital Archive","Long-term preserved material package"]}
+      {zh:["📖","故事卡片","可发给任何亲戚"],      en:["📖","Story Card","Share with any relative"]},
+      {zh:["🎙","声音档案","带时间戳的完整转录"],  en:["🎙","Voice Archive","Full transcription with timestamps"]},
+      {zh:["🗺","记忆地图","看见迁徙轨迹"],        en:["🗺","Memory Map","See the migration trail"]}
     ],
 
     render:()=>{
       if(!S.generated) {
         const opts = [
-          {id:'card',     ic:'🪪', zh:'故事卡片', en:'Story Card'},
-          {id:'timeline', ic:'🧭', zh:'时间轴',   en:'Timeline'},
-          {id:'archive',  ic:'📦', zh:'数字档案', en:'Digital Archive'},
-          {id:'nfc',      ic:'🔖', zh:'NFC 标签', en:'NFC Tag'}
+          {id:'card',     ic:'📖', zh:'故事卡片', en:'Story Card'},
+          {id:'voice',    ic:'🎙', zh:'声音档案', en:'Voice Archive'},
+          {id:'map',      ic:'🗺', zh:'记忆地图', en:'Memory Map'},
+          {id:'prompts',  ic:'🗂', zh:'对话提示', en:'Conversation Prompts'},
+          {id:'video',    ic:'🎬', zh:'场景视频', en:'Scene Video'},
+          {id:'model3d',  ic:'🧊', zh:'3D 模型',  en:'3D Model'}
         ];
         const n = S.selectedTypes.length;
         return `
@@ -998,7 +1000,7 @@ const ST = [
               </div>
             `).join('')}
           </div>
-          <div class="selnote">${T('已选','Selected')} <b>${n}</b> / 4</div>
+          <div class="selnote">${T('已选','Selected')} <b>${n}</b> / 6</div>
           <button class="btn gold" onclick="generate()" ${n===0?'disabled':''}>
             ${n===0?T('至少选一种','Select at least one'):`✨ ${T('生成','Generate')} ${n} ${T('种图鉴内容','type(s)')}`}
           </button>`;
